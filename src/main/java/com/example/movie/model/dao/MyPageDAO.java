@@ -32,7 +32,7 @@ public class MyPageDAO {
                     .memberId(resultSet.getString("memberId"))
                     .name(resultSet.getString("name"))
                     .nickName(resultSet.getString("nickName"))
-                    .zzimCnt(resultSet.getInt("zzim"))
+                    .zzimCnt(resultSet.getInt("zzimCnt"))
                     .joinDate(String.valueOf(resultSet.getTimestamp("joinDate")))
                     .build();
         }

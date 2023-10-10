@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">--%>
   <link href="/css/myPageCSS/myPage.css" rel="stylesheet">
+  <link href="./css/common.css" rel="stylesheet">
   <title>마이 페이지</title>
 </head>
 <body>
@@ -25,7 +26,7 @@
       <label class="col-sm-2">아이디 ${loginInfo.memberId}</label>
       <label class="col-sm-2">이름 ${loginInfo.name}</label>
       <label class="col-sm-2">닉네임 ${loginInfo.nickName}</label>
-      <label class="col-sm-2">찜 ${loginInfo.zzim}</label>
+      <label class="col-sm-2">찜 ${loginInfo.zzimCnt}</label>
     </div>
   </form>
 </div>
@@ -51,12 +52,14 @@
       <%-- 현재시간 , 작성시간 구하기 --%>
       <fmt:parseNumber value="${currentTime.time / (1000*60*60)}" integerOnly="true" var="currentFmtTime" scope="request"/>
       <fmt:parseNumber value="${boardDTO.addDate.time / (1000*60*60)}" integerOnly="true" var="addFmtTime" scope="request"/>
-      <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-        <a href="get.board?action=get&contentNo=${boardDTO.contentNo}" class="text-decoration-none" type="hidden">
-            ${boardDTO.title}
-            ${boardDTO.addDate}
-            ${boardDTO.nickName}
-            ${boardDTO.hit}
+      <li class="list-group-1">
+        <a href="get.board?action=get&contentNo=${boardDTO.contentNo}" class="text-decoration-1" type="hidden">
+          <p> ${boardDTO.title}
+              ${boardDTO.addDate}
+              ${boardDTO.nickName}
+              ${boardDTO.hit}
+              <input type="checkbox" value="check">
+          </p>
         </a>
       </li>
     </c:forEach>
@@ -65,11 +68,13 @@
   <div class="tab-content" id="tab2">
     <!--"내가 쓴 댓글"-->
     <c:forEach var="commentDTO" items="${commentDTOList}" varStatus="status">
-      <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-        <a href="get.board?action=get&contentNo=${commentDTO.contentNo}" class="text-decoration-none" >
-            ${commentDTO.commentNo}
-            ${commentDTO.addDate}
-            ${commentDTO.nickName}
+      <li class="list-group-2">
+        <a href="get.board?action=get&contentNo=${commentDTO.contentNo}" class="text-decoration-2" >
+          <p> ${commentDTO.commentNo}
+              ${commentDTO.addDate}
+              ${commentDTO.nickName}
+              <input type="checkbox" value="check">
+          </p>
         </a>
       </li>
     </c:forEach>
@@ -78,12 +83,14 @@
   <div class="tab-content" id="tab3">
     <!--"내가 쓴 리뷰"-->
     <c:forEach var="reviewDTO" items="${reviewDTOList}" varStatus="status">
-      <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-        <a href="view.movie?action=view&movieNo=${reviewDTO.movieNo}" class="text-decoration-none" >
-            ${reviewDTO.score}
-            ${reviewDTO.review}
-            ${reviewDTO.nickName}
-            ${reviewDTO.addDate}
+      <li class="list-group-3">
+        <a href="view.movie?action=view&movieNo=${reviewDTO.movieNo}" class="text-decoration-3" >
+          <p> ${reviewDTO.score}
+              ${reviewDTO.review}
+              ${reviewDTO.nickName}
+              ${reviewDTO.addDate}
+              <input type="checkbox" value="check">
+          </p>
         </a>
       </li>
     </c:forEach>
@@ -91,30 +98,28 @@
 
   <div class="tab-content" id="tab4">
     <!-- "내가 찜한 영화" -->
-    <%--    <c:forEach var="movieDTO" items="${zzimMovieList}" varStatus="status">&ndash;%&gt;--%>
-    <%--        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">--%>
-    <%--          <a href="view.movie?action=view&movieNo=${movieDTO.movieNo}" class="text-decoration-none" >--%>
-    <%--              ${movieDTO.movieNo}--%>
-    <%--              ${movieDTO.movieName}--%>
-    <%--              ${movieDTO.director}--%>
-    <%--              ${movieDTO.actor}--%>
-    <%--              ${movieDTO.releaseDate}--%>
-    <%--              ${movieDTO.region}--%>
-    <%--              ${movieDTO.genre}--%>
-    <%--              ${movieDTO.audience}--%>
-    <%--              ${movieDTO.ranking}--%>
-    <%--              ${movieDTO.runningtime}--%>
-    <%--              ${movieDTO.outline}--%>
-    <%--              ${movieDTO.poster}--%>
-    <%--              ${movieDTO.mo}--%>
-    <%--              ${movieDTO.avgScore}--%>
-    <%--          </a>--%>
-    <%--        </li>--%>
-    <%--      </c:forEach>--%>
+        <c:forEach var="movieDTO" items="${zzimMovieList}" varStatus="status">
+            <li class="list-group-4">
+              <a href="view.movie?action=view&movieNo=${movieDTO.movieNo}" class="text-decoration-4" >
+                <p> ${movieDTO.movieName}
+                    <img src="${movieDTO.poster}" alt="영화 이미지">
+                    ${movieDTO.mo}
+                    ${movieDTO.avgScore}
+                    <input type="checkbox" value="check">
+                </p>
+              </a>
+            </li>
+          </c:forEach>
   </div>
 </div>
 <jsp:include page="../footer.jsp"/>
 <script>
+  // 초기 tab-content hidden 설정
+  const allTabContents = document.querySelectorAll(".tab-content");
+  allTabContents.forEach((content) => {
+    content.style.display = "none";
+  });
+
   // 탭 링크로 변경함
   const tabs = document.querySelectorAll(".mytab-link");
 

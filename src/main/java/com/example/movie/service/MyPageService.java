@@ -16,7 +16,6 @@ public enum MyPageService {
     INSTANCE, BoardDTO;
 
     private MyPageDAO myPageDAO;
-    private CommentDAO commentDAO;
 
     MyPageService() {
         myPageDAO = new MyPageDAO();

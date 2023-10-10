@@ -16,7 +16,7 @@
 </head>
 <body>
 <%
-    boolean zzim = (boolean) request.getAttribute("zzim");
+    //boolean zzim = (boolean) request.getAttribute("zzim");
 %>
 <jsp:include page="../header.jsp"/>
 <div class="container w-75 mt-5 mx-auto">
