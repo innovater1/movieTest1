@@ -47,6 +47,11 @@
   </ul>
 
   <div class="tab-content" id="tab1">
+    <!-- 기능 편의 버튼 -->
+    <a href="#" class="btn btn-primary" id="checkAll">전체 선택</a>
+    <a href="#" class="btn btn-primary" id="uncheckAll">전체 해제</a>
+    <a href="#" class="content btn-removeAll">비우기</a>
+    <a href="#" class="content btn-selected">선택삭제</a>
     <!-- "내가 쓴 글" -->
     <c:forEach var="boardDTO" items="${boardDTOList}" varStatus="status">
       <%-- 현재시간 , 작성시간 구하기 --%>
@@ -59,6 +64,7 @@
               ${boardDTO.nickName}
               ${boardDTO.hit}
               <input type="checkbox" value="check">
+            <a href="./remove.board?action=remove&contentNo=${boardDTO.contentNo}" onclick="return confirm('정말 삭제하시겠습니까?');" class="remove-btn">삭제 </a>
           </p>
         </a>
       </li>
@@ -66,14 +72,20 @@
   </div>
 
   <div class="tab-content" id="tab2">
+    <!-- 기능 편의 버튼 -->
+    <a href="#" class="btn btn-primary" id="checkAll">전체 선택</a>
+    <a href="#" class="btn btn-primary" id="uncheckAll">전체 해제</a>
+    <a href="#" class="comment btn-removeAll">비우기</a>
+    <a href="#" class="comment btn-selected">선택삭제</a>
     <!--"내가 쓴 댓글"-->
     <c:forEach var="commentDTO" items="${commentDTOList}" varStatus="status">
       <li class="list-group-2">
         <a href="get.board?action=get&contentNo=${commentDTO.contentNo}" class="text-decoration-2" >
-          <p> ${commentDTO.commentNo}
+          <p> <input type="checkbox" value="check">
+              ${commentDTO.commentNo}
               ${commentDTO.addDate}
               ${commentDTO.nickName}
-              <input type="checkbox" value="check">
+              <a href="./remove.board?action=remove&contentNo=${boardDTO.commentNo}" onclick="return confirm('정말 삭제하시겠습니까?');" class="remove-btn">삭제 </a>
           </p>
         </a>
       </li>
@@ -81,15 +93,21 @@
   </div>
 
   <div class="tab-content" id="tab3">
+    <!-- 기능 편의 버튼 -->
+    <a href="#" class="btn btn-primary" id="checkAll">전체 선택</a>
+    <a href="#" class="btn btn-primary" id="uncheckAll">전체 해제</a>
+    <a href="#" class="review btn-removeAll">비우기</a>
+    <a href="#" class="review btn-selected">선택삭제</a>
     <!--"내가 쓴 리뷰"-->
     <c:forEach var="reviewDTO" items="${reviewDTOList}" varStatus="status">
       <li class="list-group-3">
         <a href="view.movie?action=view&movieNo=${reviewDTO.movieNo}" class="text-decoration-3" >
-          <p> ${reviewDTO.score}
+          <p> <input type="checkbox" value="check">
+              ${reviewDTO.score}
               ${reviewDTO.review}
               ${reviewDTO.nickName}
               ${reviewDTO.addDate}
-              <input type="checkbox" value="check">
+              <a href="./remove.movie?action=view&movieNo=${reviewDTO.reviewNo}" onclick="return confirm('정말 삭제하시겠습니까?');" class="remove-btn">삭제 </a>
           </p>
         </a>
       </li>
@@ -101,11 +119,12 @@
         <c:forEach var="movieDTO" items="${zzimMovieList}" varStatus="status">
             <li class="list-group-4">
               <a href="view.movie?action=view&movieNo=${movieDTO.movieNo}" class="text-decoration-4" >
-                <p> ${movieDTO.movieName}
+                <p> <input type="checkbox" value="check">
+                    ${movieDTO.movieName}
                     <img src="${movieDTO.poster}" alt="영화 이미지">
                     ${movieDTO.mo}
                     ${movieDTO.avgScore}
-                    <input type="checkbox" value="check">
+
                 </p>
               </a>
             </li>
@@ -154,6 +173,66 @@
     }
   });
 });
+</script>
+
+<script> // 전체 삭제
+  document.addEventListener('DOMContentLoaded', function () {
+    const btnRemoveAll = document.querySelector(".btn-removeAll");
+    btnRemoveAll.addEventListener('click', function () {
+      if (confirm('정말 삭제하시겠습니까?')) {
+        location.href = './board/boardList.jsp';
+      }
+    });
+  });
+</script>
+<script> // 선택 삭제 (선택한 내가 작성한 글)
+  const btnRemoveSelected = document.querySelector(".btn-selected");
+  const tabContent = document.querySelector('.tab-content');
+  btnRemoveSelected.addEventListener('click', function() {
+    if (confirm('정말 삭제하시겠습니까?')) {
+      tabContent.action = '../board/boardList.jsp';
+      tabContent.submit();
+    }
+  });
+</script>
+<script>
+  // 선택 삭제 (선택한 내가 작성한 글)
+  const btnRemoveSelected = document.querySelector(".btn-selected");
+
+  btnRemoveSelected.addEventListener('click', function() {
+    if (confirm('정말 삭제하시겠습니까?')) {
+      // Find the currently active tab
+      const activeTabLink = document.querySelector(".mytab-link.active");
+      if (activeTabLink) {
+        const activeTabId = activeTabLink.getAttribute("href").substring(1);
+        const tabContent1 = document.querySelector(`#${activeTabId} form[name=tabContent1]`);
+        tabContent1.action = '../board/boardList.jsp';
+        tabContent1.submit();
+      }
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const cartTable = document.getElementById('cartTable');
+    const checkAllButton = document.getElementById('checkAll');
+    const uncheckAllButton = document.getElementById('uncheckAll');
+
+    checkAllButton.addEventListener('click', function() {
+      const checkboxes = cartTable.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(function(checkbox) {
+        checkbox.checked = true;
+      });
+    });
+
+    uncheckAllButton.addEventListener('click', function() {
+      const checkboxes = cartTable.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(function(checkbox) {
+        checkbox.checked = false;
+      });
+    });
+  });
 </script>
 </body>
 </html>
