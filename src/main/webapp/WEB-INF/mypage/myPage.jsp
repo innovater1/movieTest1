@@ -5,8 +5,8 @@
 <head>
   <meta charset="UTF-8">
   <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">--%>
-  <link href="/css/myPageCSS/myPage.css" rel="stylesheet">
   <link href="./css/common.css" rel="stylesheet">
+  <link href="/css/myPageCSS/myPage.css" rel="stylesheet">
   <title>마이 페이지</title>
 </head>
 <body>
@@ -46,72 +46,74 @@
     </li>
   </ul>
 
+  <!-- Tab content for "내가 쓴 글" -->
   <div class="tab-content" id="tab1">
     <!-- 기능 편의 버튼 -->
-    <a href="#" class="btn btn-primary" id="checkAll">전체 선택</a>
-    <a href="#" class="btn btn-primary" id="uncheckAll">전체 해제</a>
+    <a href="#" class="btn btn-primary" id="checkAll1">전체 선택</a>
+    <a href="#" class="btn btn-primary" id="uncheckAll1">전체 해제</a>
     <a href="#" class="content btn-removeAll">비우기</a>
-    <a href="#" class="content btn-selected">선택삭제</a>
-    <!-- "내가 쓴 글" -->
-    <c:forEach var="boardDTO" items="${boardDTOList}" varStatus="status">
-      <%-- 현재시간 , 작성시간 구하기 --%>
-      <fmt:parseNumber value="${currentTime.time / (1000*60*60)}" integerOnly="true" var="currentFmtTime" scope="request"/>
-      <fmt:parseNumber value="${boardDTO.addDate.time / (1000*60*60)}" integerOnly="true" var="addFmtTime" scope="request"/>
-      <li class="list-group-1">
-        <a href="get.board?action=get&contentNo=${boardDTO.contentNo}" class="text-decoration-1" type="hidden">
-          <p> ${boardDTO.title}
+    <a href="#" class="content btn-selected1">선택삭제</a>
+
+    <form name="frmRemoveSelected1" action="/removeSelected1" method="post"> <!-- Adjust the action URL -->
+      <ul class="list-group-1">
+        <c:forEach var="boardDTO" items="${boardDTOList}" varStatus="status">
+          <li>
+            <input type="checkbox" name="selectedItems" value="${boardDTO.contentNo}">
+              ${boardDTO.title}
               ${boardDTO.addDate}
               ${boardDTO.nickName}
               ${boardDTO.hit}
-              <input type="checkbox" value="check">
-            <a href="./remove.board?action=remove&contentNo=${boardDTO.contentNo}" onclick="return confirm('정말 삭제하시겠습니까?');" class="remove-btn">삭제 </a>
-          </p>
-        </a>
-      </li>
-    </c:forEach>
+            <a href="./remove.board?action=remove&contentNo=${boardDTO.contentNo}" onclick="return confirm('정말 삭제하시겠습니까?');" class="remove-btn">삭제</a>
+          </li>
+        </c:forEach>
+      </ul>
+    </form>
   </div>
 
+  <!-- Tab content for "내가 쓴 댓글" -->
   <div class="tab-content" id="tab2">
     <!-- 기능 편의 버튼 -->
-    <a href="#" class="btn btn-primary" id="checkAll">전체 선택</a>
-    <a href="#" class="btn btn-primary" id="uncheckAll">전체 해제</a>
+    <a href="#" class="btn btn-primary" id="checkAll2">전체 선택</a>
+    <a href="#" class="btn btn-primary" id="uncheckAll2">전체 해제</a>
     <a href="#" class="comment btn-removeAll">비우기</a>
-    <a href="#" class="comment btn-selected">선택삭제</a>
-    <!--"내가 쓴 댓글"-->
-    <c:forEach var="commentDTO" items="${commentDTOList}" varStatus="status">
-      <li class="list-group-2">
-        <a href="get.board?action=get&contentNo=${commentDTO.contentNo}" class="text-decoration-2" >
-          <p> <input type="checkbox" value="check">
+    <a href="#" class="comment btn-selected2">선택삭제</a>
+
+    <form name="frmRemoveSelected2" action="/removeSelected2" method="post"> <!-- Adjust the action URL -->
+      <ul class="list-group-2">
+        <c:forEach var="commentDTO" items="${commentDTOList}" varStatus="status">
+          <li>
+            <input type="checkbox" name="selectedItems" value="${commentDTO.commentNo}">
               ${commentDTO.commentNo}
               ${commentDTO.addDate}
               ${commentDTO.nickName}
-              <a href="./remove.board?action=remove&contentNo=${boardDTO.commentNo}" onclick="return confirm('정말 삭제하시겠습니까?');" class="remove-btn">삭제 </a>
-          </p>
-        </a>
-      </li>
-    </c:forEach>
+            <a href="./remove.board?action=remove&contentNo=${commentDTO.commentNo}" onclick="return confirm('정말 삭제하시겠습니까?');" class="remove-btn">삭제</a>
+          </li>
+        </c:forEach>
+      </ul>
+    </form>
   </div>
 
+  <!-- Tab content for "내가 쓴 리뷰" -->
   <div class="tab-content" id="tab3">
     <!-- 기능 편의 버튼 -->
-    <a href="#" class="btn btn-primary" id="checkAll">전체 선택</a>
-    <a href="#" class="btn btn-primary" id="uncheckAll">전체 해제</a>
-    <a href="#" class="review btn-removeAll">비우기</a>
-    <a href="#" class="review btn-selected">선택삭제</a>
-    <!--"내가 쓴 리뷰"-->
-    <c:forEach var="reviewDTO" items="${reviewDTOList}" varStatus="status">
-      <li class="list-group-3">
-        <a href="view.movie?action=view&movieNo=${reviewDTO.movieNo}" class="text-decoration-3" >
-          <p> <input type="checkbox" value="check">
-              ${reviewDTO.score}
-              ${reviewDTO.review}
-              ${reviewDTO.nickName}
-              ${reviewDTO.addDate}
-              <a href="./remove.movie?action=view&movieNo=${reviewDTO.reviewNo}" onclick="return confirm('정말 삭제하시겠습니까?');" class="remove-btn">삭제 </a>
-          </p>
-        </a>
-      </li>
-    </c:forEach>
+    <a href="#" class="btn btn-primary" id="checkAll3">전체 선택</a>
+    <a href="#" class="btn btn-primary" id="uncheckAll3">전체 해제</a>
+    <a href="#" class="comment btn-removeAll">비우기</a>
+    <a href="#" class="comment btn-selected3">선택삭제</a>
+
+    <form name="frmRemoveSelected3" action="/removeSelected3" method="post"> <!-- Adjust the action URL -->
+      <ul class="list-group-3">
+        <c:forEach var="commentDTO" items="${commentDTOList}" varStatus="status">
+          <li>
+            <input type="checkbox" name="selectedItems" value="${commentDTO.commentNo}">
+              ${commentDTO.commentNo}
+              ${commentDTO.addDate}
+              ${commentDTO.nickName}
+            <a href="./remove.board?action=remove&contentNo=${commentDTO.commentNo}" onclick="return confirm('정말 삭제하시겠습니까?');" class="remove-btn">삭제</a>
+          </li>
+        </c:forEach>
+      </ul>
+    </form>
   </div>
 
   <div class="tab-content" id="tab4">
@@ -214,23 +216,51 @@
 </script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const cartTable = document.getElementById('cartTable');
-    const checkAllButton = document.getElementById('checkAll');
-    const uncheckAllButton = document.getElementById('uncheckAll');
-
+  // Handle "전체 선택" and "전체 해제" buttons
+  const checkAllButtons = document.querySelectorAll('.btn-checkAll');
+  const uncheckAllButtons = document.querySelectorAll('.btn-uncheckAll');
+  checkAllButtons.forEach((checkAllButton, index) => {
     checkAllButton.addEventListener('click', function() {
-      const checkboxes = cartTable.querySelectorAll('input[type="checkbox"]');
-      checkboxes.forEach(function(checkbox) {
+      const checkboxes = document.querySelectorAll(`.tab-content:nth-child(${index + 1}) input[type="checkbox"]`);
+      checkboxes.forEach((checkbox) => {
         checkbox.checked = true;
       });
     });
 
-    uncheckAllButton.addEventListener('click', function() {
-      const checkboxes = cartTable.querySelectorAll('input[type="checkbox"]');
-      checkboxes.forEach(function(checkbox) {
+    uncheckAllButtons[index].addEventListener('click', function() {
+      const checkboxes = document.querySelectorAll(`.tab-content:nth-child(${index + 1}) input[type="checkbox"]`);
+      checkboxes.forEach((checkbox) => {
         checkbox.checked = false;
       });
+    });
+  });
+
+  // Handle "선택 삭제" buttons
+  const removeSelectedButtons = document.querySelectorAll('.btn-removeSelected');
+  removeSelectedButtons.forEach((removeSelectedButton, index) => {
+    removeSelectedButton.addEventListener('click', function() {
+      const checkboxes = document.querySelectorAll(`.tab-content:nth-child(${index + 1}) input[type="checkbox"]`);
+      const form = document.forms[`frmRemoveSelected${index + 1}`];
+      const selectedItems = [];
+
+      checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+          selectedItems.push(checkbox.value);
+        }
+      });
+
+      if (selectedItems.length > 0) {
+        // Add the selected items to the form as a hidden input
+        const selectedItemsInput = document.createElement('input');
+        selectedItemsInput.type = 'hidden';
+        selectedItemsInput.name = 'selectedItems';
+        selectedItemsInput.value = selectedItems.join(',');
+
+        form.appendChild(selectedItemsInput);
+        form.submit();
+      } else {
+        alert('삭제할 컨텐츠를 클릭해주세요.');
+      }
     });
   });
 </script>
