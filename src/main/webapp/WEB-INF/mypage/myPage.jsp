@@ -5,7 +5,6 @@
 <head>
   <meta charset="UTF-8">
   <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">--%>
-  <link href="./css/common.css" rel="stylesheet">
   <link href="/css/myPageCSS/myPage.css" rel="stylesheet">
   <title>마이 페이지</title>
 </head>
@@ -49,12 +48,11 @@
   <!-- Tab content for "내가 쓴 글" -->
   <div class="tab-content" id="tab1">
     <!-- 기능 편의 버튼 -->
-    <a href="#" class="btn btn-primary" id="checkAll1">전체 선택</a>
-    <a href="#" class="btn btn-primary" id="uncheckAll1">전체 해제</a>
-    <a href="#" class="content btn-removeAll">비우기</a>
-    <a href="#" class="content btn-selected1">선택삭제</a>
-
-    <form name="frmRemoveSelected1" action="/removeSelected1" method="post"> <!-- Adjust the action URL -->
+    <input type="button" class="checkAll1 btn-checkAll" value="전체 선택">
+    <input type="button" class="uncheckAll1 btn-uncheckAll" value="전체 해제">
+    <input type="button" class="comment btn-removeAll" value="전체 삭제">
+    <input type="button" class="comment btn-selected1" value="선택 삭제">
+    <form name="frmRemoveSelected1" action="./get.board?action=get&contentNo=${boardDTO.contentNo}" method="post"> <!-- Adjust the action URL -->
       <ul class="list-group-1">
         <c:forEach var="boardDTO" items="${boardDTOList}" varStatus="status">
           <li>
@@ -73,12 +71,12 @@
   <!-- Tab content for "내가 쓴 댓글" -->
   <div class="tab-content" id="tab2">
     <!-- 기능 편의 버튼 -->
-    <a href="#" class="btn btn-primary" id="checkAll2">전체 선택</a>
-    <a href="#" class="btn btn-primary" id="uncheckAll2">전체 해제</a>
-    <a href="#" class="comment btn-removeAll">비우기</a>
-    <a href="#" class="comment btn-selected2">선택삭제</a>
+    <input type="button" class="checkAll2 btn-checkAll" value="전체 선택">
+    <input type="button" class="uncheckAll2 btn-uncheckAll" value="전체 해제">
+    <input type="button" class="comment btn-removeAll" value="전체 삭제">
+    <input type="button" class="comment btn-selected2" value="선택 삭제">
 
-    <form name="frmRemoveSelected2" action="/removeSelected2" method="post"> <!-- Adjust the action URL -->
+    <form name="frmRemoveSelected2" action="./get.board?action=get&contentNo=${boardDTO.contentNo}" method="post"> <!-- Adjust the action URL -->
       <ul class="list-group-2">
         <c:forEach var="commentDTO" items="${commentDTOList}" varStatus="status">
           <li>
@@ -96,12 +94,12 @@
   <!-- Tab content for "내가 쓴 리뷰" -->
   <div class="tab-content" id="tab3">
     <!-- 기능 편의 버튼 -->
-    <a href="#" class="btn btn-primary" id="checkAll3">전체 선택</a>
-    <a href="#" class="btn btn-primary" id="uncheckAll3">전체 해제</a>
-    <a href="#" class="comment btn-removeAll">비우기</a>
-    <a href="#" class="comment btn-selected3">선택삭제</a>
+    <input type="button" class="checkAll3 btn-checkAll" value="전체 선택">
+    <input type="button" class="uncheckAll3 btn-uncheckAll" value="전체 해제">
+    <input type="button" class="comment btn-removeAll" value="전체 삭제">
+    <input type="button" class="comment btn-selected3" value="선택 삭제">
 
-    <form name="frmRemoveSelected3" action="/removeSelected3" method="post"> <!-- Adjust the action URL -->
+    <form name="frmRemoveSelected3" action="/view.movie?action=view&movieNo=${commentDTO.movieNO}" method="post"> <!-- Adjust the action URL -->
       <ul class="list-group-3">
         <c:forEach var="commentDTO" items="${commentDTOList}" varStatus="status">
           <li>
@@ -121,7 +119,6 @@
         <c:forEach var="movieDTO" items="${zzimMovieList}" varStatus="status">
             <li class="list-group-4">
               <a href="view.movie?action=view&movieNo=${movieDTO.movieNo}" class="text-decoration-4" >
-                <p> <input type="checkbox" value="check">
                     ${movieDTO.movieName}
                     <img src="${movieDTO.poster}" alt="영화 이미지">
                     ${movieDTO.mo}
@@ -221,15 +218,15 @@
   const uncheckAllButtons = document.querySelectorAll('.btn-uncheckAll');
   checkAllButtons.forEach((checkAllButton, index) => {
     checkAllButton.addEventListener('click', function() {
-      const checkboxes = document.querySelectorAll(`.tab-content:nth-child(${index + 1}) input[type="checkbox"]`);
-      checkboxes.forEach((checkbox) => {
+      const checkboxes1 = document.querySelectorAll(`.tab-content:nth-child(${index + 1}) input[type="checkbox"]`);
+      checkboxes1.forEach((checkbox) => {
         checkbox.checked = true;
       });
     });
 
     uncheckAllButtons[index].addEventListener('click', function() {
-      const checkboxes = document.querySelectorAll(`.tab-content:nth-child(${index + 1}) input[type="checkbox"]`);
-      checkboxes.forEach((checkbox) => {
+      const checkboxes2 = document.querySelectorAll(`.tab-content:nth-child(${index + 1}) input[type="checkbox"]`);
+      checkboxes2.forEach((checkbox) => {
         checkbox.checked = false;
       });
     });
