@@ -54,7 +54,8 @@
         <form name="frmRemoveSelected1" action="./get.board?action=get&contentNo=${boardDTO.contentNo}" method="post"> <!-- Adjust the action URL -->
           <ul class="list-group-1">
             <c:forEach var="boardDTO" items="${boardDTOList}" varStatus="status">
-              <li class="myList">
+              <li>
+                <div class="flex_my">
                 <form action="#" >
                   <!--label태그는 체크박스를 누르지 않아도 연결된 체크박스를 체크해줌-->
                   <label for="chk${boardDTO.contentNo}">
@@ -63,7 +64,7 @@
                   </label>
                 </form>
                     <a href="get.board?action=get&contentNo=${boardDTO.contentNo}" class="text-decoration-none" type="hidden">
-                      <p> ${boardDTO.title}
+                      <p class="myList" > ${boardDTO.title}
                           ${boardDTO.addDate}
                           ${boardDTO.nickName}
                           ${boardDTO.hit}
@@ -71,6 +72,7 @@
                            class="remove-btn" style="font-size: 30px">X</a>
                       </p>
                     </a>
+                </div>
               </li>
             </c:forEach>
           </ul>
@@ -90,7 +92,8 @@
         <form name="frmRemoveSelected2" action="./get.board?action=get&contentNo=${boardDTO.contentNo}" method="post"> <!-- Adjust the action URL -->
           <ul class="list-group-2">
             <c:forEach var="commentDTO" items="${commentDTOList}" varStatus="status">
-              <li class="myList">
+              <li>
+                <div class="flex_my">
                 <form action="#" >
                   <!--label태그는 체크박스를 누르지 않아도 연결된 체크박스를 체크해줌-->
                   <label for="chk${commentDTO.commentNo}">
@@ -99,13 +102,14 @@
                   </label>
                 </form>
                     <a href="get.board?action=get&contentNo=${commentDTO.contentNo}" class="text-decoration-none" >
-                       <p> ${commentDTO.commentNo}
+                       <p class="myList"> ${commentDTO.commentNo}
                            ${commentDTO.addDate}
                            ${commentDTO.nickName}
                       <a href="./remove.board?action=remove&contentNo=${commentDTO.commentNo}" onclick="return confirm('정말 삭제하시겠습니까?');"
                          class="remove-btn" style="font-size: 30px">X</a>
                        </p>
                     </a>
+                  </div>
               </li>
             </c:forEach>
           </ul>
@@ -125,7 +129,8 @@
         <form name="frmRemoveSelected3" action="/view.movie?action=view&movieNo=${commentDTO.movieNO}" method="post"> <!-- Adjust the action URL -->
           <ul class="list-group-3">
             <c:forEach var="reviewDTO" items="${reviewDTOList}" varStatus="status">
-              <li class="myList">
+              <li>
+                <div class="flex_my">
                 <form action="#">
                   <!--label태그는 체크박스를 누르지 않아도 연결된 체크박스를 체크해줌-->
                   <label for="chk${reviewDTO.movieNo}">
@@ -134,13 +139,14 @@
                   </label>
                 </form>
                     <a href="view.movie?action=view&movieNo=${reviewDTO.movieNo}" class="text-decoration-none" >
-                      <p> ${reviewDTO.review}
+                      <p class="myList"> ${reviewDTO.review}
                           ${reviewDTO.addDate}
                           ${commentDTO.nickName}
                         <a href="./remove.board?action=remove&contentNo=${reviewDTO.movieNo}" onclick="return confirm('정말 삭제하시겠습니까?');"
                            class="remove-btn" style="font-size: 30px">X</a>
                       </p>
                     </a>
+                  </div>
               </li>
             </c:forEach>
           </ul>
